@@ -1,0 +1,21 @@
+
+
+// Allow option to save data forms
+// Fields for model "Company"
+// 
+
+name: // company name
+person: // representative
+email: // email
+phone: // phone
+www:
+WeChat:
+Description:
+Products: 
+    - name
+    - description
+    - image:
+        - local url
+    
+
+
