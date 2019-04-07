@@ -21,7 +21,7 @@ const ProductType = new GraphQLObjectType({
         images: {
             type: new GraphQLList(ImageType),
             resolve(parentValue) {
-                return Product.findImages(parentValue.id)
+                return Product.findPictures(parentValue.id)
             }
         }
 

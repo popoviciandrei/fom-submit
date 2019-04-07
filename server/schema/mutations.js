@@ -23,8 +23,8 @@ const mutation = new GraphQLObjectType({
                 wechat: { type: GraphQLString },
                 description: { type: GraphQLString }
             },
-            resolve(parentValue, { name, person, email }) {
-                return (new Company({ name, person, email })).save()
+            resolve(parentValue, { name, person, email, phone, www, wechat, description }) {
+                return (new Company({ name, person, email, phone, www, wechat, description })).save()
             }
         },
         // addProduct: {
@@ -52,7 +52,7 @@ const mutation = new GraphQLObjectType({
             type: ProductType,
             args: {
                 url: { type: GraphQLString },
-                productId: { type: GraphQLID }
+                productId: { type: new GraphQLNonNull(GraphQLID) }
             },
             resolve(parentValue, { url, productId }) {
                 return Product.addPicture(productId, url);
