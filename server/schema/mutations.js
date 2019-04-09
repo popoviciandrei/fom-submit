@@ -27,16 +27,6 @@ const mutation = new GraphQLObjectType({
                 return (new Company({ name, person, email, phone, www, wechat, description })).save()
             }
         },
-        // addProduct: {
-        //     type: ProductType,
-        //     args: {
-        //         name: { type: GraphQLString },
-        //         description: { type: GraphQLString }
-        //     },
-        //     resolve(parentValue, { name, description }) {
-        //         return (new Product({ name, description })).save()
-        //     }
-        // },
         addProductToCompany: {
             type: ProductType,
             args: {
@@ -49,13 +39,40 @@ const mutation = new GraphQLObjectType({
             }
         },
         addPictureToProduct: {
-            type: ProductType,
+            type: PictureType,
             args: {
                 url: { type: GraphQLString },
                 productId: { type: new GraphQLNonNull(GraphQLID) }
             },
             resolve(parentValue, { url, productId }) {
                 return Product.addPicture(productId, url);
+            }
+        },
+        removePicture: {
+            type: PictureType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            resolve(parentValue, { id }) {
+                return Picture.findOneAndRemove({ _id: id });
+            }
+        },
+        removeProduct: {
+            type: ProductType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            resolve(parentValue, { id }) {
+                return Product.findOneAndRemove({ _id: id });
+            }
+        },
+        removeCompany: {
+            type: CompanyType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            resolve(parentValue, { id }) {
+                return Company.findOneAndRemove({ _id: id });
             }
         }
     }

@@ -29,7 +29,7 @@ CompanySchema.statics.addProduct = function (id, name, description) {
             const product = new Product({ name, description, company: id });
             company.products.push(product);
             return Promise.all([product.save(), company.save()])
-                .then(([product, company]) => company);
+                .then(([product, company]) => product);
         })
 }
 

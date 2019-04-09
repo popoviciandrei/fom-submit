@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
-const ImageType = require('./picture_type');
+const PictureType = require('./picture_type');
 const Product = mongoose.model('product');
 
 const ProductType = new GraphQLObjectType({
@@ -18,8 +18,8 @@ const ProductType = new GraphQLObjectType({
                     })
             }
         },
-        images: {
-            type: new GraphQLList(ImageType),
+        pictures: {
+            type: new GraphQLList(PictureType),
             resolve(parentValue) {
                 return Product.findPictures(parentValue.id)
             }

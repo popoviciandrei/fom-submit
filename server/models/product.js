@@ -24,7 +24,7 @@ ProductSchema.statics.addPicture = function (id, url) {
             const picture = new Picture({ url, product: id })
             product.pictures.push(picture)
             return Promise.all([picture.save(), product.save()])
-                .then(([picture, product]) => product);
+                .then(([picture, product]) => picture);
         });
 }
 
