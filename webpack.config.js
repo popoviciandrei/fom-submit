@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './client/index.js',
   output: {
     path: '/',
@@ -10,9 +11,13 @@ module.exports = {
   module: {
     rules: [
       {
-        use: 'babel-loader',
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        query:
+        {
+          presets: ['react']
+        }
       },
       {
         use: ['style-loader', 'css-loader'],
