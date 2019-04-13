@@ -16,9 +16,7 @@ import CompanyNew from './components/CompanyNew';
 // import SongDetail from './components/SongDetail';
 
 const cache = new InMemoryCache();
-const link = new HttpLink({
-  uri: 'http://localhost:4000/'
-})
+const link = new HttpLink({ uri: 'http://localhost:4000/graphql/' });
 const client = new ApolloClient({
   dataIdFromObject: o => o.id,
   cache,
