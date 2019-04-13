@@ -1,16 +1,56 @@
-import React from 'react';
-//import { graphql } from 'react-apollo';
-//import { Link } from 'react-router';
-//import query from '../queries/fetchCompanies';
-//import gql from 'graphql-tag';
+import React, { Component } from 'react';
+import { graphql } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import query from '../queries/fetchCompanies';
+import mutation from '../mutations/deleteCompany';
 
-function CompanyList() {
+class CompanyList extends Component {
+    onCompanyDelete(id) {
+        this.props
+            .mutate({ variables: { id } })
+            .then(() => this.props.data.refetch());
+    }
+    renderCompanies() {
+        return this.props.data.companies.map(({ id, name, person, www }) => {
+            return (
+                <tr key={id} className="collection-item">
+                    <td>{name}</td>
+                    <td>{person}</td>
+                    <td>{www}</td>
+                    <td>
+                        <i
+                            className="material-icons"
+                            onClick={() => this.onCompanyDelete(id)}>
+                            delete
+                        </i>
+                    </td>
+                    {/* <Link to={`/company/${id}`}>{name}</Link> */}
+                </tr>
+            );
+        });
+    }
 
-    return (
-        <div>
-            <h1>Rendering company list here</h1>
-        </div>
-    )
+    render() {
+        if (this.props.data.loading) {
+            return <div>Loading...</div>;
+        }
+
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact Person</th>
+                            <th>www</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>{this.renderCompanies()}</tbody>
+                </table>
+            </div>
+        );
+    }
 }
 
-export default CompanyList;
+export default graphql(mutation)(graphql(query)(CompanyList));

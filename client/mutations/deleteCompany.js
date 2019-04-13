@@ -1,12 +1,8 @@
 import gql from 'graphql-tag';
-
 export default gql`
-    {
-        companies {
+    mutation deleteCompany($id: ID) {
+        deleteCompany(id: $id) {
             id
-            name
-            person
-            www
         }
     }
 `;
