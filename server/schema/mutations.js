@@ -21,55 +21,66 @@ const mutation = new GraphQLObjectType({
                 phone: { type: GraphQLString },
                 www: { type: GraphQLString },
                 wechat: { type: GraphQLString },
-                description: { type: GraphQLString }
+                description: { type: GraphQLString },
             },
-            resolve(parentValue, { name, person, email, phone, www, wechat, description }) {
-                return (new Company({ name, person, email, phone, www, wechat, description })).save()
-            }
+            resolve(
+                parentValue,
+                { name, person, email, phone, www, wechat, description }
+            ) {
+                return new Company({
+                    name,
+                    person,
+                    email,
+                    phone,
+                    www,
+                    wechat,
+                    description,
+                }).save();
+            },
         },
         addProductToCompany: {
             type: ProductType,
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                companyId: { type: new GraphQLNonNull(GraphQLID) }
+                companyId: { type: new GraphQLNonNull(GraphQLID) },
             },
             resolve(parentValue, { name, description, companyId }) {
                 return Company.addProduct(companyId, name, description);
-            }
+            },
         },
         addPictureToProduct: {
             type: PictureType,
             args: {
                 url: { type: GraphQLString },
-                productId: { type: new GraphQLNonNull(GraphQLID) }
+                productId: { type: new GraphQLNonNull(GraphQLID) },
             },
             resolve(parentValue, { url, productId }) {
                 return Product.addPicture(productId, url);
-            }
+            },
         },
         deletePicture: {
             type: PictureType,
             args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Picture.findOneAndRemove({ _id: id });
-            }
+            },
         },
         deleteProduct: {
             type: ProductType,
             args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Product.findOneAndRemove({ _id: id });
-            }
+            },
         },
         deleteCompany: {
             type: CompanyType,
             args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Company.findOneAndRemove({ _id: id });
-            }
-        }
-    }
-})
+            },
+        },
+    },
+});
 
 module.exports = mutation;

@@ -20,9 +20,8 @@ const link = new HttpLink({ uri: 'http://localhost:4000/graphql/' });
 const client = new ApolloClient({
   dataIdFromObject: o => o.id,
   cache,
-  link
+  link,
 });
-
 
 const Root = () => {
   return (
@@ -30,8 +29,8 @@ const Root = () => {
       <HashRouter>
         <div className="container">
           <Switch>
-            <Route exact path='/' component={CompanyList} />
-            <Route path='/company/new' component={CompanyNew} />
+            <Route exact path="/" component={CompanyList} />
+            <Route path="/company/:id" component={CompanyNew} />
           </Switch>
         </div>
       </HashRouter>
@@ -39,7 +38,4 @@ const Root = () => {
   );
 };
 
-ReactDOM.render(
-  <Root />,
-  document.querySelector('#root')
-);
+ReactDOM.render(<Root />, document.querySelector('#root'));
