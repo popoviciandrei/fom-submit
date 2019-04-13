@@ -48,29 +48,23 @@ const mutation = new GraphQLObjectType({
                 return Product.addPicture(productId, url);
             }
         },
-        removePicture: {
+        deletePicture: {
             type: PictureType,
-            args: {
-                id: { type: new GraphQLNonNull(GraphQLID) }
-            },
+            args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Picture.findOneAndRemove({ _id: id });
             }
         },
-        removeProduct: {
+        deleteProduct: {
             type: ProductType,
-            args: {
-                id: { type: new GraphQLNonNull(GraphQLID) }
-            },
+            args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Product.findOneAndRemove({ _id: id });
             }
         },
-        removeCompany: {
+        deleteCompany: {
             type: CompanyType,
-            args: {
-                id: { type: new GraphQLNonNull(GraphQLID) }
-            },
+            args: { id: { type: GraphQLID } },
             resolve(parentValue, { id }) {
                 return Company.findOneAndRemove({ _id: id });
             }
